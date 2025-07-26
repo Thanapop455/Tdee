@@ -1,0 +1,204 @@
+.food-details-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 30px;
+}
+
+/* Header */
+.food-header {
+  display: flex;
+  margin-left: 200px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.food-image {
+  width: 250px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.food-info {
+  text-align: right;
+  max-width: 500px;
+}
+
+.food-info h1 {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.food-info h2 {
+  font-size: 48px;
+  font-weight: bold;
+  color: #0073e6;
+}
+
+/* ปุ่มเพิ่ม/ลดจำนวน */
+.serving-controls {
+  display: flex;
+  padding-left: 250px;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.serving-controls button {
+  background: #0073e6;
+  color: white;
+  font-size: 14px;
+  padding: 5px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.serving-controls button:hover {
+  background: #005bb5; /* เปลี่ยนเป็นสีน้ำเงินเข้มขึ้นเมื่อ hover */
+}
+
+.serving-controls button:active {
+  background: #004494; /* เปลี่ยนสีเมื่อกดปุ่ม */
+}
+
+.serving-controls span {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* 🔥 วิธีเผาผลาญ และ 🔹 ข้อมูลโภชนาการ */
+.food-details-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+/* 🔥 วิธีเผาผลาญ */
+/* 🔥 วิธีเผาผลาญ */
+.burning-methods {
+  width: 55%;
+  padding: 20px;
+  border-radius: 8px;
+  background: #f9f9f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.burning-methods h3 {
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.burning-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  text-align: center;
+}
+
+.burning-card {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.burning-card:hover {
+  transform: scale(1.05);
+}
+
+.burning-card .icon {
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+.burning-card .text {
+  font-size: 16px;
+  font-weight: bold;
+  color: #444;
+}
+
+.burning-card .minutes {
+  font-size: 18px;
+  font-weight: bold;
+  color: #0073e6;
+}
+
+
+/* 🔹 ข้อมูลโภชนาการ */
+.nutrition-container {
+  width: 40%;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+}
+
+.nutrition-title {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.nutrition-food-name {
+  font-size: 14px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.nutrition-serving {
+  font-size: 12px;
+  text-align: center;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 10px 0;
+}
+
+.nutrition-label {
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.nutrition-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.nutrition-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.nutrition-value {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.nutrition-note {
+  font-size: 10px;
+  text-align: center;
+  color: gray;
+}
+
+.nutrition-source {
+  font-size: 12px;
+  text-align: center;
+  font-weight: bold;
+}
+

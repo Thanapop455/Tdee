@@ -1,0 +1,4 @@
+.scroll-custom {
+    scrollbar-width: thin; /* ให้ Scrollbar บางลง */
+    scrollbar-color: #8251 #f0f0f0; /* สีของ Thumb และ Track */
+}  

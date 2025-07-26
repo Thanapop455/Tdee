@@ -1,0 +1,290 @@
+.container {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f3f3f3; /* ✅ แถบสีเทา */
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto; /* ✅ ขยับไปทางขวา */
+}
+
+.search-input2 {
+  width: 250px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.search-button, .reset-button {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-button {
+  background-color: #0073e6;
+  color: white;
+}
+
+.search-button:hover {
+  background-color: #005bb5;
+}
+
+.reset-button {
+  background-color: #d9534f;
+  color: white;
+}
+
+.reset-button:hover {
+  background-color: #c9302c;
+}
+
+.food-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 🌟 แถวละ 5 คอลัมน์ */
+  gap: 20px; /* 🌟 ระยะห่างระหว่างการ์ด */
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 34px;
+  padding: 20px;
+}
+
+
+.food-card {
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  width: 200px; 
+  height: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: calc(100% / 6 - 10px);
+}
+
+.food-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+}
+
+.food-card-image {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+}
+
+.food-card-content {
+  padding: 8px;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.food-card-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 3px;
+}
+
+.food-card-description {
+  color: #666;
+  font-size: 18px;
+  line-height: 1.2;
+  margin-bottom: 5px;
+  min-height: 35px;
+}
+
+
+h1 {
+  margin-top: 10px;
+  font-size: 22px;
+  color: #0073e6;
+}
+.search-results-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.search-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+}
+
+.search-input2 {
+  padding: 10px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* 🌟 ย้าย Filter ไปทางขวาและปรับขนาด */
+.search-results-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.search-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+}
+
+.search-input2 {
+  padding: 10px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.category-filter {
+  position: fixed; /* 🔥 เปลี่ยนจาก absolute เป็น fixed */
+  top: 160px; /* ✅ ปรับให้ต่ำลงมาอยู่ใต้ช่องค้นหา */
+  right: 130px; /* ✅ ให้อยู่ขวา */
+  width: 250px;
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  z-index: 999; /* ✅ ทำให้ลอยขึ้น ไม่ทับกับ input */
+}
+
+/* ✅ เพิ่ม margin-top ให้ Filter ไม่ติดกัน */
+.search-bar {
+  margin-bottom: 10px; /* ✅ เพิ่มระยะห่าง */
+}
+
+.category-filter h2 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.category-checkbox {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.category-checkbox input {
+  margin-right: 8px;
+}
+
+.search-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.food-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+}
+
+.food-card {
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  width: 200px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.food-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+}
+
+.food-card-image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.food-card-content {
+  padding: 8px;
+  text-align: center;
+}
+
+.food-card-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.food-card-description {
+  color: #666;
+  font-size: 14px;
+}
+
+p{
+  color:#78a3d4
+}

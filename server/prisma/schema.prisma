@@ -1,0 +1,135 @@
+// This is your Prisma schema file
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  password      String
+  name          String?
+  picture       String?
+  role          String         @default("user")
+  enabled       Boolean        @default(true)
+  weight        Int? 
+  height        Int? 
+  age           Int? 
+  gender        String? 
+  tdee          Int?
+  tdeeResults   TdeeResult[] 
+  mealPlans     MealPlan[] 
+  weightRecords WeightRecord[] 
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model TdeeResult {
+  id         Int           @id @default(autoincrement())
+  user       User          @relation(fields: [userId], references: [id])
+  userId     Int
+  tdee       Int 
+  bmr        Float?
+  activity   ActivityLevel @relation(fields: [activityId], references: [id])
+  activityId Int
+  createdAt  DateTime      @default(now())
+}
+
+model ActivityLevel {
+  id          Int          @id @default(autoincrement())
+  name        String 
+  description String? 
+  multiplier  Float 
+  tdeeResults TdeeResult[]
+}
+
+model Food {
+  id           Int            @id @default(autoincrement())
+  title        String 
+  description  String? 
+  calorie      Float? 
+  fat          Float? 
+  carbohydrate Float? 
+  protein      Float? 
+  servingSize  String? 
+  source       String? 
+  burnMethods  BurnMethod[] 
+  mealItems    MealPlanItem[] 
+  images       Image[] 
+  views        Int            @default(0)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  category     Category?      @relation(fields: [categoryId], references: [id])
+  categoryId   Int?
+}
+
+model BurnMethod {
+  id       Int    @id @default(autoincrement())
+  activity String 
+  calorie  Int 
+  food     Food   @relation(fields: [foodId], references: [id], onDelete: Cascade)
+  foodId   Int
+}
+
+model Image {
+  id         Int      @id @default(autoincrement())
+  asset_id   String
+  public_id  String
+  url        String 
+  secure_url String 
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  food       Food     @relation(fields: [foodId], references: [id], onDelete: Cascade)
+  foodId     Int
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String 
+  foods     Food[] 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MealPlan {
+  id           Int            @id @default(autoincrement())
+  user         User           @relation(fields: [userId], references: [id])
+  userId       Int 
+  name         String 
+  dailyCalorie Float 
+  tdee         Float 
+  items        MealPlanItem[] 
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model MealPlanItem {
+  id         Int      @id @default(autoincrement())
+  mealPlan   MealPlan @relation(fields: [mealPlanId], references: [id], onDelete: Cascade)
+  mealPlanId Int 
+  food       Food     @relation(fields: [foodId], references: [id], onDelete: Cascade)
+  foodId     Int 
+  mealTime   String 
+  quantity   Float 
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model WeightRecord {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int 
+  weight     Float 
+  recordedAt DateTime @default(now()) 
+}
+
+model VisitorLog {
+  id        Int      @id @default(autoincrement())
+  ip        String
+  userAgent String
+  visitedAt DateTime @default(now())
+}
