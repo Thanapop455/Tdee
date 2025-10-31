@@ -3,7 +3,7 @@ const prisma = require("../config/prisma");
 
 exports.authCheck = async (req, res, next) => {
   try {
-    // 📌 ตรวจสอบว่า Request มี Header "Authorization" หรือไม่
+
     const headerToken = req.headers.authorization;
     if (!headerToken) {
       return res.status(401).json({ message: "No Token Provided" });
@@ -11,7 +11,7 @@ exports.authCheck = async (req, res, next) => {
 
     const token = headerToken.split(" ")[1];
 
-    // ตรวจสอบ Token ว่าถูกต้องหรือไม่
+
     let decode;
     try {
       decode = jwt.verify(token, process.env.SECRET);

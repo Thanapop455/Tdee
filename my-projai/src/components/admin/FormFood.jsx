@@ -4,49 +4,37 @@ import { createFood, deleteFood } from "../../api/Food";
 import { toast } from "react-toastify";
 import Uploadfile from "./Uploadfile";
 import { Link } from "react-router-dom";
-import { LucideTrash, PencilLine, Trash, Trash2 } from "lucide-react";
+import { PencilLine, Trash2 } from "lucide-react";
 import Swal from "sweetalert2";
 
 const initialState = {
   title: "",
   description: "",
-  calorie: 0,
-  fat: 0,
-  carbohydrate: 0,
-  protein: 0,
+  calorie: "",
+  fat: "",
+  carbohydrate: "",
+  protein: "",
   servingSize: "",
-  source:"",
+  source: "",
   categoryId: "",
-  images: []
+  images: [],
 };
 
-const FormFood = () => {  
+const FormFood = () => {
   const token = useStoregobal((state) => state.token);
   const getCategory = useStoregobal((state) => state.getCategory);
   const categories = useStoregobal((state) => state.categories);
   const getFood = useStoregobal((state) => state.getFood);
   const foods = useStoregobal((state) => state.foods);
 
-  const [form, setForm] = useState({
-    title: "",
-    description: "",
-    calorie: "",
-    fat: "",
-    carbohydrate: "",
-    protein: "",
-    servingSize: "",
-    source:"",
-    categoryId: "",
-    images: []
-  });
+  const [form, setForm] = useState(initialState);
 
   useEffect(() => {
-    getCategory(token)
-    getFood(token)
-  }, [])
+    getCategory(token);
+    getFood(token);
+  }, []);
 
   const handleOnChange = (e) => {
-    console.log(e.target.name, e.target.value);
     setForm({
       ...form,
       [e.target.name]: e.target.value,
@@ -57,12 +45,12 @@ const FormFood = () => {
     e.preventDefault();
     try {
       const res = await createFood(token, form);
-      console.log(res);
-      setForm(initialState)
+      setForm(initialState);
       getFood(token);
       toast.success(`เพิ่มข้อมูล ${res.data.title} สำเร็จ`);
     } catch (err) {
       console.log(err);
+      toast.error("เกิดข้อผิดพลาดในการเพิ่มข้อมูล");
     }
   };
 
@@ -79,12 +67,11 @@ const FormFood = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const res = await deleteFood(token, id);
-          console.log(res);
-          toast.success(" ลบอาหารเรียบร้อยแล้ว!");
+          await deleteFood(token, id);
+          toast.success("ลบอาหารเรียบร้อยแล้ว!");
           getFood(token);
         } catch (err) {
-          console.error(" Error:", err);
+          console.error("Error:", err);
           toast.error("⚠️ เกิดข้อผิดพลาดในการลบข้อมูล");
         }
       }
@@ -92,160 +79,178 @@ const FormFood = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 bg-white shadow-md">
-      <form onSubmit={handleSubmit}>
-        <h1>เพิ่มข้อมูลอาหาร</h1>
-        <input
-          className="border"
-          value={form.title}
-          onChange={handleOnChange}
-          placeholder="Title"
-          name="title"
-          required
-        />
-        <input
-          className="border"
-          value={form.description}
-          onChange={handleOnChange}
-          placeholder="Description"
-          name="description"
-        />
-        <input
-          type="number"
-          className="border"
-          value={form.calorie}
-          onChange={handleOnChange}
-          placeholder="Calorie"
-          name="calorie"
-          required
-        />
-        <input
-          type="number"
-          className="border"
-          value={form.fat}
-          onChange={handleOnChange}
-          placeholder="Fat"
-          name="fat"
-          required
-        />
-        <input
-          type="number"
-          className="border"
-          value={form.carbohydrate}
-          onChange={handleOnChange}
-          placeholder="Carbohydrate"
-          name="carbohydrate"
-          required
-        />
-        <input
-          type="number"
-          className="border"
-          value={form.protein}
-          onChange={handleOnChange}
-          placeholder="Protein"
-          name="protein"
-          required
-        />
-        <input
-          className="border"
-          value={form.servingSize}
-          onChange={handleOnChange}
-          placeholder="ServingSize"
-          name="servingSize"
-          required
-        />
-        <input
-          className="border"
-          value={form.source}
-          onChange={handleOnChange}
-          placeholder="แหล่งที่มา"
-          name="source"
-        />
-        <select
-          className="border"
-          name="categoryId"
-          onChange={handleOnChange}
-          required
-          value={form.categoryId}
-        >
-          <option value="" disabled>
-            Please Select
-          </option>
-          {categories.map((item, index) => (
-            <option key={index} value={item.id}>
-              {item.name}
+    <div className="container mx-auto p-6">
+      {/* ฟอร์มเพิ่มอาหาร */}
+      <form
+        onSubmit={handleSubmit}
+        className="rounded-2xl bg-white p-6 shadow-md ring-1 ring-gray-100"
+      >
+        <h1 className="mb-4 text-xl font-semibold text-gray-800">
+          ➕ เพิ่มข้อมูลอาหาร
+        </h1>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <input
+            className="rounded-lg border px-3 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100"
+            value={form.title}
+            onChange={handleOnChange}
+            placeholder="ชื่ออาหาร"
+            name="title"
+            required
+          />
+          <input
+            className="rounded-lg border px-3 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100"
+            value={form.servingSize}
+            onChange={handleOnChange}
+            placeholder="Serving Size (เช่น 100 g)"
+            name="servingSize"
+            required
+          />
+          <input
+            type="number"
+            className="rounded-lg border px-3 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100"
+            value={form.calorie}
+            onChange={handleOnChange}
+            placeholder="Calorie (kcal)"
+            name="calorie"
+            required
+          />
+          <input
+            type="number"
+            className="rounded-lg border px-3 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100"
+            value={form.protein}
+            onChange={handleOnChange}
+            placeholder="Protein (g)"
+            name="protein"
+            required
+          />
+          <input
+            type="number"
+            className="rounded-lg border px-3 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100"
+            value={form.carbohydrate}
+            onChange={handleOnChange}
+            placeholder="Carbohydrate (g)"
+            name="carbohydrate"
+            required
+          />
+          <input
+            type="number"
+            className="rounded-lg border px-3 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100"
+            value={form.fat}
+            onChange={handleOnChange}
+            placeholder="Fat (g)"
+            name="fat"
+            required
+          />
+          <input
+            className="col-span-2 rounded-lg border px-3 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100"
+            value={form.description}
+            onChange={handleOnChange}
+            placeholder="คำอธิบาย"
+            name="description"
+          />
+          <input
+            className="col-span-2 rounded-lg border px-3 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100"
+            value={form.source}
+            onChange={handleOnChange}
+            placeholder="แหล่งที่มา"
+            name="source"
+          />
+          <select
+            className="rounded-lg border px-3 py-2 focus:border-blue-500 focus:ring focus:ring-blue-100"
+            name="categoryId"
+            onChange={handleOnChange}
+            required
+            value={form.categoryId}
+          >
+            <option value="" disabled>
+              เลือกหมวดหมู่
             </option>
-          ))}
-        </select>
-        <hr />
+            {categories.map((item, index) => (
+              <option key={index} value={item.id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <Uploadfile form={form} setForm={setForm} />
+        <div className="mt-4">
+          <Uploadfile form={form} setForm={setForm} />
+        </div>
 
-        <button className="bg-blue-500 mt-4 mb-5 p-1">เพิ่มเมนู</button>
-        <hr />
-        <br />
-
-        <table className="table border-separate border-spacing-2 w-full">
-  <thead>
-    <tr className="bg-gray-200">
-      <th className="px-4 py-2">No.</th>
-      <th className="px-4 py-2">รูปภาพ</th>
-      <th className="px-4 py-2">ชื่ออาหาร</th>
-      <th className="px-4 py-2">หมวดหมู่</th>
-      <th className="px-4 py-2">แคลลอรี่</th>
-      <th className="px-4 py-2">Fat</th>
-      <th className="px-4 py-2">Protein</th>
-      <th className="px-4 py-2">carbohydrate</th>
-      <th className="px-4 py-2">servingSize</th>
-      <th className="px-4 py-2">การจัดการ</th>
-    </tr>
-  </thead>
-  <tbody>
-    {foods.map((item, index) => {
-      return (
-        <tr key={index} className="hover:bg-gray-100">
-          <td className="px-4 py-2 text-center">{index + 1}</td>
-          <td className="px-4 py-2 text-center">
-            {item.images.length > 0 ? (
-              <img
-                className="w-24 h-24 rounded-lg shadow-md"
-                src={item.images[0].url}
-                alt={item.title}
-              />
-            ) : (
-              <div className="w-24 h-24 bg-gray-200 rounded-md flex items-center justify-center shadow-sm">
-                No Image
-              </div>
-            )}
-          </td>
-          <td className="px-4 py-2">{item.title}</td>
-          <td className="px-4 py-2 text-center">{item.category?.name || "ไม่มีหมวดหมู่"}</td>
-          <td className="px-4 py-2 text-center">{item.calorie}</td>
-          <td className="px-4 py-2 text-center">{item.fat}</td>
-          <td className="px-4 py-2 text-center">{item.protein}</td>
-          <td className="px-4 py-2 text-center">{item.carbohydrate}</td>
-          <td className="px-4 py-2 text-center" >{item.servingSize}</td>
-          <td className="px-4 py-2 flex justify-around">
-            <p className="bg-green-400 text-white px-3 py-1 rounded-md 
-            hover:scale-105 hover:-translate-y-1 hover:duration-200 shadow-md">
-              <Link to={`/admin/food/${item.id}`}>
-              <PencilLine />
-              </Link>
-            </p>
-            <p
-              className="bg-red-400 text-white px-3 py-1 rounded-md 
-              hover:scale-105 hover:-translate-y-1 hover:duration-200 shadow-md"
-              onClick={() => handleDelete(item.id)}
-            >
-              <Trash2 />
-            </p>
-          </td>
-        </tr>
-      );
-    })}
-  </tbody>
-</table>
+        <button
+          className="mt-6 rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white shadow hover:bg-blue-700"
+          type="submit"
+        >
+        เพิ่มเมนู
+        </button>
       </form>
+
+      {/* ตารางแสดงอาหาร */}
+      <div className="mt-8 overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-gray-100">
+        <table className="w-full border-collapse text-sm">
+          <thead className="bg-gray-100 text-gray-700">
+            <tr>
+              <th className="px-4 py-3">No.</th>
+              <th className="px-4 py-3">รูปภาพ</th>
+              <th className="px-4 py-3">ชื่ออาหาร</th>
+              <th className="px-4 py-3">หมวดหมู่</th>
+              <th className="px-4 py-3">พลังงาน</th>
+              <th className="px-4 py-3">โปรตีน</th>
+              <th className="px-4 py-3">คาร์บ</th>
+              <th className="px-4 py-3">ไขมัน</th>
+              <th className="px-4 py-3">Serving</th>
+              <th className="px-4 py-3">การจัดการ</th>
+            </tr>
+          </thead>
+          <tbody>
+            {foods.map((item, index) => (
+              <tr
+                key={index}
+                className="border-t hover:bg-gray-50 transition-colors"
+              >
+                <td className="px-4 py-3 text-center">{index + 1}</td>
+                <td className="px-4 py-3 text-center">
+                  {item.images.length > 0 ? (
+                    <img
+                      className="mx-auto h-16 w-16 rounded-lg object-cover shadow"
+                      src={item.images[0].url}
+                      alt={item.title}
+                    />
+                  ) : (
+                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-lg bg-gray-200 text-xs text-gray-500">
+                      No Image
+                    </div>
+                  )}
+                </td>
+                <td className="px-4 py-3">{item.title}</td>
+                <td className="px-4 py-3 text-center">
+                  {item.category?.name || "ไม่มีหมวดหมู่"}
+                </td>
+                <td className="px-4 py-3 text-center">{item.calorie}</td>
+                <td className="px-4 py-3 text-center">{item.protein}</td>
+                <td className="px-4 py-3 text-center">{item.carbohydrate}</td>
+                <td className="px-4 py-3 text-center">{item.fat}</td>
+                <td className="px-4 py-3 text-center">{item.servingSize}</td>
+                <td className="flex items-center justify-center gap-2 px-4 py-3">
+                  <Link
+                    to={`/admin/food/${item.id}`}
+                    className="rounded-md bg-green-500 p-2 text-white shadow hover:bg-green-600"
+                  >
+                    <PencilLine className="h-4 w-4" />
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    className="rounded-md bg-red-500 p-2 text-white shadow hover:bg-red-600"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

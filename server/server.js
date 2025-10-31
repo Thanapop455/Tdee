@@ -13,16 +13,6 @@ app.use(cors())
 
 readdirSync('./routes')
     .map((c) => app.use('/api', require('./routes/' + c)))
-
-// Step 3 Router
-// app.post('/api',(req,res)=>{
-//     // code
-//     const { username,password } = req.body
-//     console.log(username,password)
-    // res.send('โย่วๆๆ')
-// })
-// Step 2 Start Server
-
 const dashboardRoutes = require('./routes/dashboard');
 app.use('/api/dashboard', dashboardRoutes);
 app.use("/api/visitor", require("./routes/visitor"));

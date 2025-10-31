@@ -4,7 +4,6 @@ const { addBodyStat, getBodyStats } = require('../controllers/bodyStat');
 const { authCheck } = require('../middlewares/authCheck');
 
 router.post('/bodystat', authCheck, addBodyStat);
-// authCheck,
 router.get('/bodystats', authCheck, getBodyStats);
-// authCheck,
+
 module.exports = router;
